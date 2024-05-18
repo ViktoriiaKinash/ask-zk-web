@@ -1,5 +1,6 @@
 import { QuestionEntityType } from "../../types";
 import ExpectedValue from "../ExpectedValue";
+import "./QuestionEntity.css";
 
 interface QuestionEntityProps extends QuestionEntityType {
   deleteQuestion: (id: string) => void;
@@ -23,14 +24,15 @@ const QuestionEntity = ({
   changeExpectedValue,
 }: QuestionEntityProps) => {
   return (
-    <div style={{ display: "flex", flexDirection: "column", marginTop: 30 }}>
-      <div>
+    <div>
+      <div className="new-question-wrapper">
         <input
+          type="text"
           value={value.value}
           onChange={(e) => {
             changeQuestionTitle(id, e.target.value);
           }}
-        ></input>
+        />
         <button
           onClick={() => {
             deleteQuestion(id);
@@ -39,10 +41,10 @@ const QuestionEntity = ({
           Delete
         </button>
       </div>
-
       <div>
         {value.possible_values.map((possibleValue) => (
           <ExpectedValue
+            key={possibleValue.id}
             expectedValue={possibleValue}
             questionId={id}
             removeQuestionExpectedValue={removeQuestionExpectedValue}
@@ -55,7 +57,7 @@ const QuestionEntity = ({
           addQuestionExpectedValue(id);
         }}
       >
-        Add default value
+        Add an answer
       </button>
     </div>
   );

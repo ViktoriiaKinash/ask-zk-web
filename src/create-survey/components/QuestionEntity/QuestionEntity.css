@@ -1,0 +1,20 @@
+.new-question-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin: 5px;
+}
+
+input[type="text"] {
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 5px 8px;
+}
+
+.new-question-wrapper button {
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 5px 8px;
+}

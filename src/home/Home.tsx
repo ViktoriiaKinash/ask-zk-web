@@ -1,14 +1,18 @@
 import { NavLink } from "react-router-dom";
+import "./Home.css";
 
 const Home = () => {
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <NavLink style={{ color: "red" }} to="/login">
+    <div className="container">
+      <h1>ASK.ZK</h1>
+      <NavLink className="link" to="/create-survey">
         Create
       </NavLink>
-
-      <NavLink style={{ color: "red" }} to="/results">
+      <NavLink className="link" to="/results">
         View results
+      </NavLink>
+      <NavLink className="link" to="/fill-survey">
+        Fill out a survey
       </NavLink>
     </div>
   );

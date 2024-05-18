@@ -1,4 +1,5 @@
 import { PossibleValuesType } from "../../types";
+import "./ExpectedValue.css";
 
 interface ExpectedValueProps {
   expectedValue: PossibleValuesType;
@@ -18,8 +19,9 @@ const ExpectedValue = ({
   changeExpectedValue,
 }: ExpectedValueProps) => {
   return (
-    <div key={expectedValue.id}>
+    <div className="new-question-wrapper">
       <input
+        type="text"
         value={expectedValue.value}
         onChange={(e) => {
           changeExpectedValue(questionId, expectedValue.id, e.target.value);

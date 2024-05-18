@@ -2,6 +2,17 @@ import { useState } from "react";
 import { QuestionEntityType } from "./types";
 import QuestionEntity from "./components/QuestionEntity";
 import axios from "axios";
+import "./CreateSurvey.css";
+import { IDKitWidget, VerificationLevel } from "@worldcoin/idkit";
+
+const APP_ID = import.meta.env.VITE_APP_ID;
+
+type Verification = {
+  proof: string;
+  merkle_root: string;
+  nullifier_hash: string;
+  verification_level: VerificationLevel;
+};
 
 const CreateSurvey = () => {
   const [survey, setSurvey] = useState<QuestionEntityType[]>([]);
@@ -85,8 +96,10 @@ const CreateSurvey = () => {
     );
   };
 
-  const submitSurvey = () => {
-    const param = { form: [] };
+  const submitSurvey = (result: Verification) => {
+    const param = { form: [], payload: result } as {
+      form: { value: string; possible_values: string[] }[];
+    };
     survey.forEach((question) => {
       console.log("question ", question);
       const paramVal = {
@@ -102,8 +115,8 @@ const CreateSurvey = () => {
   };
 
   return (
-    <div>
-      <h1>Create Survey</h1>
+    <div className="container">
+      <h1>ASK.ZK</h1>
       <button
         onClick={() => {
           setSurvey([
@@ -118,20 +131,30 @@ const CreateSurvey = () => {
           ]);
         }}
       >
-        Add question
+        Add a question
       </button>
-      {survey.map((question) => (
-        <QuestionEntity
-          key={question.id}
-          {...question}
-          deleteQuestion={deleteQuestion}
-          changeQuestionTitle={changeQuestionTitle}
-          addQuestionExpectedValue={addQuestionExpectedValue}
-          removeQuestionExpectedValue={removeQuestionExpectedValue}
-          changeExpectedValue={changeExpectedValue}
-        />
-      ))}
-      <button onClick={submitSurvey}>Submit</button>
+      <div className="survey">
+        {survey.map((question) => (
+          <QuestionEntity
+            key={question.id}
+            {...question}
+            deleteQuestion={deleteQuestion}
+            changeQuestionTitle={changeQuestionTitle}
+            addQuestionExpectedValue={addQuestionExpectedValue}
+            removeQuestionExpectedValue={removeQuestionExpectedValue}
+            changeExpectedValue={changeExpectedValue}
+          />
+        ))}
+        <IDKitWidget
+          app_id={APP_ID}
+          action="askzk-test"
+          onSuccess={console.log}
+          handleVerify={submitSurvey}
+          verification_level={VerificationLevel.Device}
+        >
+          {({ open }) => <input type="submit" onClick={open} value="SUBMIT" />}
+        </IDKitWidget>
+      </div>
     </div>
   );
 };
