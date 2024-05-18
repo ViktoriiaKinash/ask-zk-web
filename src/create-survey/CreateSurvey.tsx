@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { QuestionEntityType } from "./types";
 import QuestionEntity from "./components/QuestionEntity";
+import axios from "axios";
 
 const CreateSurvey = () => {
   const [survey, setSurvey] = useState<QuestionEntityType[]>([]);
@@ -84,6 +85,22 @@ const CreateSurvey = () => {
     );
   };
 
+  const submitSurvey = () => {
+    const param = { form: [] };
+    survey.forEach((question) => {
+      console.log("question ", question);
+      const paramVal = {
+        value: question.value.value,
+        possible_values: question.value.possible_values.map(
+          (value) => value.value
+        ),
+      };
+      param.form.push(paramVal);
+    });
+    console.log("param ", param);
+    axios.post("http://127.0.0.1:8000/forms/create/", param);
+  };
+
   return (
     <div>
       <h1>Create Survey</h1>
@@ -114,13 +131,7 @@ const CreateSurvey = () => {
           changeExpectedValue={changeExpectedValue}
         />
       ))}
-      <button
-        onClick={() => {
-          console.log(survey);
-        }}
-      >
-        Submit
-      </button>
+      <button onClick={submitSurvey}>Submit</button>
     </div>
   );
 };
