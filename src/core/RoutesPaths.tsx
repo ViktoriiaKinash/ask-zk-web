@@ -6,6 +6,7 @@ const CreateSurvey = React.lazy(() => import("../create-survey"));
 const Preview = React.lazy(() => import("../preview"));
 const Submit = React.lazy(() => import("../submit"));
 const Home = React.lazy(() => import("../home"));
+const Results = React.lazy(() => import("../results"));
 
 const RoutesPaths = createBrowserRouter([
   {
@@ -27,6 +28,14 @@ const RoutesPaths = createBrowserRouter([
   {
     path: "/submit",
     element: <Submit />,
+  },
+  {
+    path: "/view-results",
+    element: <Submit />,
+  },
+  {
+    path: "/results",
+    element: <Results />,
   },
 ]);
 
