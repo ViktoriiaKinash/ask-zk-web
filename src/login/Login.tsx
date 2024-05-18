@@ -1,8 +1,11 @@
 import { IDKitWidget, VerificationLevel } from "@worldcoin/idkit";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const onSuccess = () => {
     console.log("User has successfully verified their identity!");
+    navigate("/create-survey");
   };
   const verifyProof = async (proof: any) => {
     console.log(proof);
