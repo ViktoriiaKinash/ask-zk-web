@@ -1,5 +1,6 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
+import { FillSurvey } from "../fill-survey/FillSurvey";
 
 const Login = React.lazy(() => import("../login"));
 const CreateSurvey = React.lazy(() => import("../create-survey"));
@@ -36,6 +37,10 @@ const RoutesPaths = createBrowserRouter([
   {
     path: "/results",
     element: <Results />,
+  },
+  {
+    path: "/fill-survey/",
+    element: <FillSurvey />,
   },
 ]);
 
