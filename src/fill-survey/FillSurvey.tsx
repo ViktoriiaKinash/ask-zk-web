@@ -1,6 +1,7 @@
 import { SyntheticEvent, useRef, useState } from "react";
 import axios from "axios";
 import { IDKitWidget, VerificationLevel } from "@worldcoin/idkit";
+import "./fill-survey.css";
 
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 const APP_ID = import.meta.env.VITE_APP_ID;
@@ -93,12 +94,9 @@ export const FillSurvey: React.FC = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={submitHandler}>
-        <input
-          onChange={(e) => (inputValueRef.current = e.currentTarget.value)}
-        />
-      </form>
+    <div className="container">
+      <h1>ASK.ZK</h1>
+      <p>Fully anonymous surveys for professional and everyday use</p>
       {survey ? (
         <IDKitWidget
           app_id={APP_ID}
@@ -110,41 +108,54 @@ export const FillSurvey: React.FC = () => {
         >
           {({ open }) => (
             <form
+              className="survey"
               onSubmit={(e) => {
                 e.preventDefault();
                 submitFormHandler(open);
               }}
             >
-              <h1>FORM</h1>
               {survey.FORM.questions.map(
                 ({ multi, possible_values, value }) => (
-                  <div key={value}>
+                  <div key={value} className="question-wrapper">
                     <h3>{value}</h3>
                     {possible_values.map((possible_value) => (
-                      <label key={possible_value.value}>
-                        {possible_value.value}
-                        <input
-                          name={value}
-                          type={multi ? "checkbox" : "radio"}
-                          onChange={(e) =>
-                            handleInputClick(
-                              value,
-                              possible_value.value,
-                              multi,
-                              e.target.checked
-                            )
-                          }
-                        />
-                      </label>
+                      <div
+                        key={possible_value.value}
+                        className="answer-wrapper"
+                      >
+                        <label>
+                          <input
+                            name={value}
+                            type={multi ? "checkbox" : "radio"}
+                            onChange={(e) =>
+                              handleInputClick(
+                                value,
+                                possible_value.value,
+                                multi,
+                                e.target.checked
+                              )
+                            }
+                          />
+                          <span>{possible_value.value}</span>
+                        </label>
+                      </div>
                     ))}
                   </div>
                 )
               )}
-              <input type="submit" value="Send" />
+              <input type="submit" value="SEND" />
             </form>
           )}
         </IDKitWidget>
-      ) : null}
+      ) : (
+        <form onSubmit={submitHandler}>
+          <input
+            type="text"
+            onChange={(e) => (inputValueRef.current = e.currentTarget.value)}
+            placeholder="Insert a UUID..."
+          />
+        </form>
+      )}
     </div>
   );
 };
