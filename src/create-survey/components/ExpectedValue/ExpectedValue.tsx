@@ -23,6 +23,12 @@ const ExpectedValue = ({
       <input
         type="text"
         value={expectedValue.value}
+        style={{
+          marginTop: 10,
+          marginBottom: 10,
+          marginLeft: 20,
+          marginRight: 10,
+        }}
         onChange={(e) => {
           changeExpectedValue(questionId, expectedValue.id, e.target.value);
         }}

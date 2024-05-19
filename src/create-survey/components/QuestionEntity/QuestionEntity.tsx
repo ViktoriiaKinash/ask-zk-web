@@ -42,15 +42,19 @@ const QuestionEntity = ({
         </button>
       </div>
       <div>
-        {value.possible_values.map((possibleValue) => (
-          <ExpectedValue
-            key={possibleValue.id}
-            expectedValue={possibleValue}
-            questionId={id}
-            removeQuestionExpectedValue={removeQuestionExpectedValue}
-            changeExpectedValue={changeExpectedValue}
-          />
-        ))}
+        <ul>
+          {value.possible_values.map((possibleValue) => (
+            <li>
+              <ExpectedValue
+                key={possibleValue.id}
+                expectedValue={possibleValue}
+                questionId={id}
+                removeQuestionExpectedValue={removeQuestionExpectedValue}
+                changeExpectedValue={changeExpectedValue}
+              />
+            </li>
+          ))}
+        </ul>
       </div>
       <button
         onClick={() => {

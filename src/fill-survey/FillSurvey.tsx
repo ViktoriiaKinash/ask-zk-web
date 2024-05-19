@@ -2,6 +2,7 @@ import { SyntheticEvent, useRef, useState } from "react";
 import axios from "axios";
 import { IDKitWidget, VerificationLevel } from "@worldcoin/idkit";
 import "./fill-survey.css";
+import { useNavigate } from "react-router-dom";
 
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 const APP_ID = import.meta.env.VITE_APP_ID;
@@ -31,6 +32,7 @@ type Survey = {
 
 export const FillSurvey: React.FC = () => {
   const inputValueRef = useRef("");
+  const navigate = useNavigate();
   const formStateRef = useRef<Record<string, Array<string>>>({});
   const [survey, setSurvey] = useState<Survey>();
 
@@ -102,7 +104,9 @@ export const FillSurvey: React.FC = () => {
           app_id={APP_ID}
           action={`${inputValueRef.current}-submit`}
           action_description={`vote-for-${inputValueRef.current}`}
-          onSuccess={console.log}
+          onSuccess={() => {
+            navigate("/");
+          }}
           handleVerify={sendForm}
           verification_level={VerificationLevel.Device}
         >
